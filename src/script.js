@@ -9,7 +9,7 @@ import { DepthPackingStrategies, MeshStandardMaterial, SpotLightHelper } from "t
  */
 // Debug
 const gui = new dat.GUI();
-
+gui.hide()
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
 
@@ -114,8 +114,9 @@ lightHouse.add(Cone)
 //spotLight For TOp lighthouse
 
 // const sl=new THREE.SpotLight("#fff",1,-1,.5,1,1.2)
-const sl=new THREE.SpotLight("#fff",5,10,new THREE.MathUtils.degToRad(10),0,1.2)
-// const sl=new THREE.SpotLight("#fff",5,10,-1,0)
+// const sl=new THREE.SpotLight("#fff",5,10,new THREE.MathUtils.degToRad(10),0,1.2)
+const sl=new THREE.SpotLight("#fff",5,10,-1,0)
+
 
 
 sl.shadow.mapSize.width=1024
@@ -125,37 +126,39 @@ sl.shadow.mapSize.height=1024
 // sl.position.set(5.5,7.5,-7)
 sl.position.set(5,7.5,-6)
 sl.target.position.x=0
+// sl.shadowMapVisible = true;
+
 scene.add(sl.target)
 
 sl.lookAt(new THREE.Vector3())
-// gui.add(sl, "intensity").min(0).max(1).step(0.01).name("sl intensity");
-// gui.add(sl, "angle").min(0).max(20).step(0.5).name("sl angle");
-// gui.add(sl, "distance").min(-10).max(50).step(.5).name("sl distance");
-// gui.add(sl, "penumbra").min(0).max(1).step(.05).name("sl penumbra");
-// gui.add(sl, "decay").min(-10).max(50).step(.5).name("sl decay");
-// gui.add(sl.position, "x").min(-10).max(50).step(.5).name("sl pos x");
-// gui.add(sl.position, "y").min(-10).max(50).step(.5).name("sl pos y");
-// gui.add(sl.position, "z").min(-10).max(50).step(.5).name("sl pos z");
+gui.add(sl, "intensity").min(0).max(1).step(0.01).name("sl intensity");
+gui.add(sl, "angle").min(-200).max(200).step(0.5).name("sl angle");
+gui.add(sl, "distance").min(-1000).max(500).step(.5).name("sl distance");
+gui.add(sl, "penumbra").min(0).max(1).step(.05).name("sl penumbra");
+gui.add(sl, "decay").min(-10).max(50).step(.5).name("sl decay");
+gui.add(sl.position, "x").min(-10).max(50).step(.5).name("sl pos x");
+gui.add(sl.position, "y").min(-10).max(50).step(.5).name("sl pos y");
+gui.add(sl.position, "z").min(-10).max(50).step(.5).name("sl pos z");
 
-// gui.add(sl.target.position, "x").min(-10).max(50).step(.5).name("sl tar pos x");
-// gui.add(sl.rotation, "z").min(-10).max(50).step(.5).name("sl pos z");
+gui.add(sl.target.position, "x").min(-10).max(50).step(.5).name("sl tar pos x");
+gui.add(sl.rotation, "z").min(-10).max(50).step(.5).name("sl pos z");
 
 
-const slHelper=new THREE.SpotLightHelper(sl,0.2)
+// const slHelper=new THREE.SpotLightHelper(sl,2)
 scene.add(sl)
-scene.add(slHelper)
+// scene.add(slHelper)
 // window.requestAnimationFrame(()=>{
-//   SpotLightHelper.update()
+//   slHelper.update()
 // })
 // gui.add(lightHouseBase, "radiusTop").min(0).max(1).step(0.001);
 
 //pointLight on top of LH
 const pl = new THREE.PointLight("#e9a000", 1, 7);
 
-const plHelper=new THREE.PointLightHelper(pl,1)
-gui.add(pl.position,'x').min(-20).max(100).step(0.5).name("pl pos x")
-gui.add(pl.position,'y').min(-20).max(100).step(0.5).name("pl pos y")
-gui.add(pl.position,'z').min(-30).max(100).step(0.5).name("pl pos z")
+// const plHelper=new THREE.PointLightHelper(pl,1)
+// gui.add(pl.position,'x').min(-20).max(100).step(0.5).name("pl pos x")
+// gui.add(pl.position,'y').min(-20).max(100).step(0.5).name("pl pos y")
+// gui.add(pl.position,'z').min(-30).max(100).step(0.5).name("pl pos z")
 
 pl.position.x=-0.5;
 pl.position.y=4.5;
@@ -286,14 +289,14 @@ gui.add(ambientLight, "intensity").min(0).max(1).step(0.001);
 scene.add(ambientLight);
 
 // Directional light
-// const moonLight = new THREE.DirectionalLight("#b9d5ff", 0.12);
+// const moonLight = new THREE.DirectionalLight("#fff", 0.12);
 const moonLight = new THREE.DirectionalLight("#b9d5ff", 0);
 moonLight.position.set(4, 5, -2);
 gui.add(moonLight, "intensity").min(0).max(1).step(0.001);
 gui.add(moonLight.position, "x").min(-5).max(5).step(0.001);
 gui.add(moonLight.position, "y").min(-5).max(5).step(0.001);
 gui.add(moonLight.position, "z").min(-5).max(5).step(0.001);
-// scene.add(moonLight);
+scene.add(moonLight);
 
 //DOOR LIGHT
 const doorLight = new THREE.PointLight("#ff7d46", 1, 7);
